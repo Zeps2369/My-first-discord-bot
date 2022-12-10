@@ -21,9 +21,11 @@ function readyDiscord() {
     console.log(`Logged in as ${client.user.tag} and we are ready to go!`)
 }
 
-client.on("messageCreate", (message) => {
-    if (message.content == "Hi"){
-        message.reply("Hello you!")
-    }
-})
+client.on("messageCreate", gotMessage);
 
+function gotMessage(msg) {
+	console.log(msg.content);
+	if (msg.content === `test`) {
+		msg.reply(`f you`);
+	}
+}
