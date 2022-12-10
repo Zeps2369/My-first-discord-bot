@@ -1,31 +1,23 @@
-const Discord = require("discord.js");
-require("dotenv").config()
+const {
+  Client,
+  GatewayIntentBits,
+  Partials,
+  Collection,
+} = require("discord.js");
+const { Guilds, GuildMembers, GuildMessages } = GatewayIntentBits;
+const { User, Message, Guildmember, Threadmember } = Partials;
 
-
-
-const { Client, GatewayIntentBits } = require('discord.js');
 const client = new Client({
-	intents: [
-		GatewayIntentBits.Guilds,
-		GatewayIntentBits.GuildMessages,
-		GatewayIntentBits.MessageContent,
-		GatewayIntentBits.GuildMembers,
-	],
+  intents: [Guilds, GuildMessages, GuildMembers],
+  partials: [User, Message, Guildmember, Threadmember],
 });
 
+const { loadEvents } = require("./Handlers/eventHandler");
+
+require("dotenv").config();
+
+client.events = new Collection();
+
+loadEvents(client);
+
 client.login(process.env.TOKEN);
-
-client.on("ready", readyDiscord);
-
-function readyDiscord() {
-    console.log(`Logged in as ${client.user.tag} and we are ready to go!`)
-}
-
-client.on("messageCreate", gotMessage);
-
-function gotMessage(msg) {
-	console.log(msg.content);
-	if (msg.content === `test`) {
-		msg.reply(`f you`);
-	}
-}
