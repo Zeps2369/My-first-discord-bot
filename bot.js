@@ -1,6 +1,8 @@
 const Discord = require("discord.js");
 require("dotenv").config()
 
+
+
 const { Client, GatewayIntentBits } = require('discord.js');
 const client = new Client({
 	intents: [
@@ -24,3 +26,4 @@ client.on("messageCreate", (message) => {
         message.reply("Hello you!")
     }
 })
+
